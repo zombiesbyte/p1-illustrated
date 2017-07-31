@@ -2,8 +2,135 @@
 
 **Please note this project is still in its early stages of developement**
 
-#Buttons
+# Joy
+
+There are many different variations of digital joystick control. From something as simple as a 2-way horizontal
+right up to an 5 (half 8) way direction.
+
+The following is a list of the P1-illustrated naming system:
+###### Key
+| Symbol | Meaning |
+| $ | Included |
+| ! | Not considering at this time |
+| X | This is already covered by previous direction |
+
+### 1-way
+* ! "joy","1rn"      1-way (r)ight north facing arrangement standard i/o stick
+* ! "joy","1rnw"     1-way (r)ight north-west facing arrangement
+* ! "joy","1rne"     1-way (r)ight north-east facing arrangement
+
+
+* ! "joy","1ln"      1-way (l)eft north facing arrangement standard i/o stick
+* ! "joy","1lnw"     1-way (l)eft north-west facing arrangement
+* ! "joy","1lne"     1-way (l)eft north-east facing arrangement
+
+
+* $ "joy","1dn"      1-way (d)own north facing arrangement standard i/o stick
+* ! "joy","1dnw"     1-way (d)own north-west facing arrangement
+* ! "joy","1dne"     1-way (d)own north-east facing arrangement
+
+![P1-illustrated](../master/images/assets/joy_1dn_red.png)
+
+* $ "joy","1un"      1-way (u)p north facing arrangement standard i/o stick
+* ! "joy","1unw"     1-way (u)p north-west facing arrangement
+* ! "joy","1une"     1-way (u)p north-east facing arrangement
+
+![P1-illustrated](../master/images/assets/joy_1un_red.png)
+
+### 2-way
+* $ "joy","2hn"      2-way (l+r) north facing arrangement standard i/o stick
+* $ "joy","2hnw"     2-way (l+r) north-west facing arrangement
+* $ "joy","2hne"     2-way (l+r) north-east facing arrangement
+
+![P1-illustrated](../master/images/assets/joy_2hn_red.png)
+![P1-illustrated](../master/images/assets/joy_2hnw_red.png)
+![P1-illustrated](../master/images/assets/joy_2hne_red.png)
+
+* $ "joy","2vn"      2-way (u+d) north facing arrangment standard i/o stick
+* X "joy","2vnw"     ~~2-way (u+d) north-west~~ (this would be the same as 2hnw)
+* X "joy","2vne"     ~~2-way (u+d) north-east~~ (this would be the same as 2hne)
+
+![P1-illustrated](../master/images/assets/joy_2vn_red.png)
+
+### 4-way
+* $ "joy","4n"       4 way (u+d,l+r) north facing arrangement standard i/o stick
+* $ "joy","4nw"      4 way (u+d,l+r) north-west
+* X "joy","4ne"      ~~4 way (u+d,l+r) north-east~~ (this would be the same as north-west)
+
+![P1-illustrated](../master/images/assets/joy_4n_red.png)
+![P1-illustrated](../master/images/assets/joy_4nw_red.png)
+
+### 8-way
+* $ "joy","8n"       8 way (u+d,l+r, ul+ur,dl+dr) north facing arrangement standard i/o stick
+* X "joy","8nw"      ~~8 way (u+d,l+r, ul+ur,dl+dr) north-west~~ (this would be the same as north)
+* X "joy","8ne"      ~~8 way (u+d,l+r, ul+ur,dl+dr) north-east~~ (this would be the same as north)
+
+![P1-illustrated](../master/images/assets/joy_8n_red.png)
+
+### 3 (half4)
+* $ "joy","4cegn"    4 way (d,l+r) north facing arrangement standard i/o stick
+* $ "joy","4cegnw"   4 way (d,l+r) north-west
+* $ "joy","4cegne"   4 way (d,l+r) north-east
+
+![P1-illustrated](../master/images/assets/joy_4cegn_red.png)
+![P1-illustrated](../master/images/assets/joy_4cegnw_red.png)
+![P1-illustrated](../master/images/assets/joy_4cegne_red.png)
+
+* $ "joy","4acgn"    4 way (u,l+r) north facing arrangement standard i/o stick
+* $ "joy","4acgnw"   4 way (u,l+r) north-west
+* $ "joy","4acgne"   4 way (u,l+r) north-east
+
+![P1-illustrated](../master/images/assets/joy_4acgn_red.png)
+![P1-illustrated](../master/images/assets/joy_4acgnw_red.png)
+![P1-illustrated](../master/images/assets/joy_4acgne_red.png)
+
+* $ "joy","4aegn"    4 way (u+d,l) north facing arrangement standard i/o stick
+* X "joy","4aegnw"   ~~4 way (u+d,l) north-west~~ (this would be the same as 4cegne)
+* X "joy","4aegne"   ~~4 way (u+d,l) north-east~~ (this would be the same as 4acgnw)
+
+![P1-illustrated](../master/images/assets/joy_4aegn_red.png)
+
+* $ "joy","4acen"    4 way (u+d,r) north facing arrangement standard i/o stick
+* X "joy","4acenw"   ~~4 way (u+d,r) north-west~~ (this would be the same as 4acgne)
+* X "joy","4acene"   ~~4 way (u+d,r) north-east~~ (this would be the same as 4cegnw)
+
+![P1-illustrated](../master/images/assets/joy_4acen_red.png)
+
+### 5 (half8)
+* $ "joy","8icegn"   8 way (u, ul+ur,dl+dr) north facing arrangement standard i/o stick
+* $ "joy","8icegnw"  8 way (u, ul+ur,dl+dr) north-west
+* $ "joy","8icegne"  8 way (u, ul+ur,dl+dr) north-west
+
+![P1-illustrated](../master/images/assets/joy_8icegn_red.png)
+![P1-illustrated](../master/images/assets/joy_8icegnw_red.png)
+![P1-illustrated](../master/images/assets/joy_8icegne_red.png)
+
+* $ "joy","8iacgn"   8 way (d, ul+ur,dl+dr) north facing arrangement standard i/o stick
+* $ "joy","8iacgnw"  8 way (d, ul+ur,dl+dr) north-west
+* $ "joy","8iacgne"  8 way (d, ul+ur,dl+dr) north-west
+
+![P1-illustrated](../master/images/assets/joy_8iacgn_red.png)
+![P1-illustrated](../master/images/assets/joy_8iacgnw_red.png)
+![P1-illustrated](../master/images/assets/joy_8iacgne_red.png)
+
+* $ "joy","8iaegn"   8 way (r, ul+ur,dl+dr) north facing arrangement standard i/o stick
+* X "joy","8iaegnw"  ~~8 way (r, ul+ur,dl+dr) north-west~~ (this would be the same as 8icegne)
+* X "joy","8iaegne"  ~~8 way (r, ul+ur,dl+dr) north-west~~ (this would be the same as 8iacgnw)
+
+![P1-illustrated](../master/images/assets/joy_8iaegn_red.png)
+
+* $ "joy","8iacen"   8 way (l, ul+ur,dl+dr) north facing arrangement standard i/o stick
+* X ~~"joy","8iacenw"  8 way (l, ul+ur,dl+dr) north-west~~ (this would be the same as 8iacgne)
+* X ~~"joy","8iacene"  8 way (l, ul+ur,dl+dr) north-west~~ (this would be the same as 8icegnw)
+
+![P1-illustrated](../master/images/assets/joy_8iacen_red.png)
+
+# Buttons
+
+![P1-illustrated](../master/images/assets/button_red.png)
+
 We list the following co-ordinates for the button layouts
+
 ## General Document Notes / Rules
 * all measurements are in pixels
 * all measurements are shown as width x height (x and y)

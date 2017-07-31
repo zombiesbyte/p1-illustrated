@@ -1,0 +1,22 @@
+{
+  "name": "p1-illustrated",
+  "version": "1.0.0",
+  "description": "![P1-illustrated](../master/images/reference/p1-illustrated-logo.png)",
+  "main": "p1i.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zombiesbyte/p1-illustrated.git"
+  },
+  "author": "Dal1980",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zombiesbyte/p1-illustrated/issues"
+  },
+  "homepage": "https://github.com/zombiesbyte/p1-illustrated#readme",
+  "dependencies": {
+    "jimp": "^0.2.28"
+  }
+}
