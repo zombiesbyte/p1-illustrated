@@ -9,10 +9,11 @@ right up to an 5 (half 8) way direction.
 
 The following is a list of the P1-illustrated naming system:
 ###### Key
-| Symbol | Meaning |
-| $ | Included |
-| ! | Not considering at this time |
-| X | This is already covered by previous direction |
+| Symbol | Meaning                                       |
+| ------ | --------------------------------------------- |
+| $      | Included                                      |
+| !      | Not considering at this time                  |
+| X      | This is already covered by previous direction |
 
 ### 1-way
 * ! "joy","1rn"      1-way (r)ight north facing arrangement standard i/o stick
@@ -54,7 +55,7 @@ The following is a list of the P1-illustrated naming system:
 
 ### 4-way
 * $ "joy","4n"       4 way (u+d,l+r) north facing arrangement standard i/o stick
-* $ "joy","4nw"      4 way (u+d,l+r) north-west
+* X "joy","4nw"      4 way (u+d,l+r) north-west
 * X "joy","4ne"      ~~4 way (u+d,l+r) north-east~~ (this would be the same as north-west)
 
 ![P1-illustrated](../master/images/assets/joy_4n_red.png)
