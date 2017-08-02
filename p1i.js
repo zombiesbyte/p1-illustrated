@@ -39,11 +39,21 @@ var prepElements = function(callback){
 
 //places parts on our image
 var addPart = function(parts){
-    console.log(parts);
-    Jimp.read('images\\assets\\' + parts.asset + '.png', function( err, el) {
+    //console.log(parts);
+    
+    /*Jimp.read('images\\assets\\' + parts.asset + '.png', function( err, el) {
         if (err) throw err;
         parts.image.composite( el, parts.xPos, parts.yPos );
         parts.image.write("set\\" + parts.saveAs) // save 
+        console.log('write called within jimp');
+    });*/
+
+    Jimp.read('images\\assets\\' + parts.asset + '.png').then(function (el) {
+        parts.image.composite( el, parts.xPos, parts.yPos );
+        parts.image.write("set\\" + parts.saveAs) // save 
+        updateConsole("    Writing image: " + parts.saveAs + "                               ");
+    }).catch(function (err) {
+        console.error(err);
     });
 };
 
@@ -64,11 +74,12 @@ prepElements(function(err, row){
 
     //we now have our preliminary object from the db row info
     //we can gather more info from each of these functions
+    updateConsole("    Preparing image parts: " + p1i.name + "                               ");
     p1i = organiseButtonLayouts(p1i);
     p1i = organisePlacements(p1i);
     jimpImgObj = placeElements(p1i);
     if(p1i.version == '0') addBetaTag(jimpImgObj, p1i);
-    console.log(p1i);
+    //console.log(p1i);
 
 });
 
@@ -148,7 +159,7 @@ function organisePlacements(p1i){
         //var startY = Math.floor( ( platterH - (maxYCoord + minYCoord) - schema.buttons.height ) / 2 );
     }
     else{
-        console.log('Error: (' + p1i.name + ') the total width of all elements is greater than the canvas: allWidths: ' + allWidths + ' Canvas Width: ' + platterW);
+        //console.log('Error: (' + p1i.name + ') the total width of all elements is greater than the canvas: allWidths: ' + allWidths + ' Canvas Width: ' + platterW);
     }
 
 
@@ -242,4 +253,10 @@ function explodeElement(el, csvGrp){
     }
     el.elements.push( tempElement );
     return el;
+}
+
+function updateConsole(text){
+    //process.stdout.clearLine();  // clear current text
+    process.stdout.cursorTo(0);  // move cursor to beginning of line
+    process.stdout.write(text);  // write text
 }
