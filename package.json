@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/zombiesbyte/p1-illustrated#readme",
   "dependencies": {
-    "jimp": "^0.2.28"
+    "jimp": "^0.2.28",
+    "sqlite3": "^3.1.8"
   }
 }
