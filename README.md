@@ -428,15 +428,20 @@ inceasing the x,y as a cumulative collection.
 
 ## Light-Guns
 *Section details to follow*
+
 ![P1-illustrated](../master/images/assets/lightgun_1_red.png)
+
 ![P1-illustrated](../master/images/assets/lightgun_2_red.png)
 
 ## Wheels, Spinners & Dials
 *Section details to follow*
+
 ![P1-illustrated](../master/images/assets/wheel_black.png)
+
 ![P1-illustrated](../master/images/assets/spinner_grey.png)
 ![P1-illustrated](../master/images/assets/dialalt_grey.png)
 
 ## Trackballs
 *Section details to follow*
+
 ![P1-illustrated](../master/images/assets/trackball_red.png)
