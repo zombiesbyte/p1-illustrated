@@ -1,6 +1,32 @@
 ![P1-illustrated](../master/images/reference/p1-illustrated-logo.png)
 
 **Please note this project is still in its early stages of developement**
+# Colour Swatches
+*Illustrates the available colours*
+
+![P1-illustrated](../master/images/assets/swatch_black.png)
+![P1-illustrated](../master/images/assets/swatch_grey.png)
+![P1-illustrated](../master/images/assets/swatch_white.png)
+![P1-illustrated](../master/images/assets/swatch_yellow.png)
+![P1-illustrated](../master/images/assets/swatch_peach.png)
+![P1-illustrated](../master/images/assets/swatch_gold.png)
+![P1-illustrated](../master/images/assets/swatch_red.png)
+![P1-illustrated](../master/images/assets/swatch_darkred.png)
+![P1-illustrated](../master/images/assets/swatch_blue.png)
+![P1-illustrated](../master/images/assets/swatch_darkblue.png)
+![P1-illustrated](../master/images/assets/swatch_green.png)
+
+* Black (black)
+* Grey (grey)
+* White (white)
+* Yellow (yellow)
+* Peach (peach)
+* Gold (gold)
+* Red (red)
+* Dark Red (darkred)
+* Blue (blue)
+* Dark Blue (darkblue)
+* Green (green)
 
 # Joy
 
@@ -398,3 +424,19 @@ inceasing the x,y as a cumulative collection.
 |0,106   |110,106 |220,106 |330,106 |0,0     |110,0   |220,0   |330,0   |
 
 ![P1-illustrated](../master/images/reference/_button_layout-8-4.png)
+
+
+## Light-Guns
+*Section details to follow*
+![P1-illustrated](../master/images/assets/lightgun_1_red.png)
+![P1-illustrated](../master/images/assets/lightgun_2_red.png)
+
+## Wheels, Spinners & Dials
+*Section details to follow*
+![P1-illustrated](../master/images/assets/wheel_black.png)
+![P1-illustrated](../master/images/assets/spinner_grey.png)
+![P1-illustrated](../master/images/assets/dialalt_grey.png)
+
+## Trackballs
+*Section details to follow*
+![P1-illustrated](../master/images/assets/trackball_red.png)
