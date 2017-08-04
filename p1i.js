@@ -17,6 +17,27 @@ console.log("    ---------------------------------------------------------------
 console.log("    --Dal1980--------------------------------------------------P1-illustrated--Version 1.0--(beta)--");
 console.log("");
 
+var limit = 0;
+var offset = 0;
+
+if(process.argv[2] != ''){
+    if(parseInt(process.argv[2]) == process.argv[2]){
+        limit = parseInt(process.argv[2])
+        offset = limit - 1000;
+    }
+    else{
+        console.log('Error: please pass integer values only');
+        process.exit();
+    }
+}
+else {
+    console.log('This app requires a set number as a parameter.');
+    console.log('usage example: node p1i 1000');
+    console.log('This example will run the first 1000 image creations.');
+    console.log('Subsequent blocks are addressed by their numbers (2000,3000,4000..etc)');
+    process.exit();
+}
+
 var platterW = 1000;
 var platterH = 500;
 //var image = new Jimp( platterW, platterH );
@@ -31,7 +52,7 @@ var schema = JSON.parse( fs.readFileSync("data\\schema.json") );
 
 //Lycos, fetch me my database, good boy!
 var prepElements = function(callback){
-    db.each("SELECT * FROM `p1i` WHERE `element_1` != ''", function(err, row) {
+    db.each("SELECT * FROM `p1i` WHERE `element_1` != '' LIMIT " + limit + " OFFSET " + offset, function(err, row) {
         if(err) console.log(err);
         callback(err, row);        
     });
