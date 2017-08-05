@@ -218,7 +218,7 @@ inceasing the x,y as a cumulative collection.
 ### 2-3
 |[1]     |[2]     |
 |--------|--------|
-|0,0     |0,106   |
+|0,106   |0,0     |
 
 ![P1-illustrated](../master/images/reference/_button_layout-2-3.png)
 
@@ -247,6 +247,7 @@ inceasing the x,y as a cumulative collection.
 |[1]     |[2]     |[3]     |
 |--------|--------|--------|
 |0,30    |110,0   |220,0   |
+*3-4 should have labels shown under buttons, not above*
 
 ![P1-illustrated](../master/images/reference/_button_layout-3-4.png)
 
@@ -361,6 +362,18 @@ inceasing the x,y as a cumulative collection.
 |0,0     |110,0   |220,0   |330,0   |440,0   |
 
 ![P1-illustrated](../master/images/reference/_button_layout-5-6.png)
+            { "x": 0,   "y": 40, "labelPos": 1   },
+            { "x": 110, "y": 0,  "labelPos": 1   },
+            { "x": 250, "y": 40, "labelPos": 1   },
+            { "x": 390, "y": 0,  "labelPos": 1   },
+            { "x": 500, "y": 40, "labelPos": 1   }
+
+### 5-7
+|[1]     |[2]     |[3]     |[4]     |[5]     |
+|--------|--------|--------|--------|--------|
+|0,40    |110,0   |250,40  |390,0   |500,40  |
+
+![P1-illustrated](../master/images/reference/_button_layout-5-7.png)
 
 ### 6-1
 |[1]     |[2]     |[3]     |[4]     |[5]     |[6]     |
