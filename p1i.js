@@ -39,7 +39,7 @@ var jimpFont;
 
 //Lycos, fetch me my database, good boy!
 var prepElements = function(callback){
-    db.each("SELECT * FROM `p1i` WHERE `name` == 'asteroid'", function(err, row) {
+    db.each("SELECT * FROM `p1i` WHERE `element_1` != '' LIMIT 2000", function(err, row) {
         if(err) console.log(err);
         callback(err, row);        
     });
@@ -147,7 +147,6 @@ function organisePlacements(p1i){
         allWidths += p1i.buttonSet.width;
         groupCount++;
     }
-    console.log('allWidths: ' + allWidths);
     p1i.groupCount = groupCount;
     //we should now have all part widths
     //(hopefully this is not greater than the width of canvas)
@@ -173,7 +172,6 @@ function organiseButtonLayouts(p1i){
         var btnX = parseInt(schema.buttons[ p1i.buttonSchema ][n]['x']);
         var btnY = parseInt(schema.buttons[ p1i.buttonSchema ][n]['y']);
         var labelPos = parseInt(schema.buttons[ p1i.buttonSchema ][n]['labelPos']);
-        console.log(p1i.elements[ p1i.buttonIndexes[n] ].relX);
         p1i.elements[ p1i.buttonIndexes[n] ].btnX = btnX + parseInt(p1i.elements[ p1i.buttonIndexes[n] ].relX);
         p1i.elements[ p1i.buttonIndexes[n] ].btnY = btnY + parseInt(p1i.elements[ p1i.buttonIndexes[n] ].relY);
         p1i.elements[ p1i.buttonIndexes[n] ].labelPos = labelPos;
@@ -196,7 +194,6 @@ function placeElements(p1i){
     var marginCount = 1;
     var margin = 0;
     var buttonCount = 0;
-    console.log('distroMargin: ' + p1i.distroMarginWidth);
     for(var n = 0; n < p1i.totalElements; n++){
         if(p1i.elements[n].device == 'btn'){
             buttonCount++;
@@ -247,7 +244,7 @@ function addBetaTag(imgObj, p1i){
 
 //places parts on our image
 var addPart = function(parts){
-    console.log(parts);
+    //console.log(parts);
     
     /*Jimp.read('images\\assets\\' + parts.asset + '.png', function( err, el) {
         //if (err) throw err;
@@ -260,7 +257,6 @@ var addPart = function(parts){
         parts.image.composite( el, parts.xPos, parts.yPos );
         
         if(parts.label != null){
-            console.log('Label: ' + parts.label);
             var labelX = parseInt(parts.xPos);
 
             if(parts.labelPos == 0) var labelY = parseInt(parts.yPos - 25); //label top
@@ -270,10 +266,6 @@ var addPart = function(parts){
             var textDiff  = 94 - textWidth;
             var centredTxt =  Math.floor( textDiff / 2 );
             labelX += centredTxt - 2;
-            console.log('labelX: ' + labelX);
-            console.log('textWidth: ' + textWidth);
-            console.log('centredTxt: ' + centredTxt);
-            
             parts.image.print( jimpFont, labelX, labelY, parts.label );
         }
 
