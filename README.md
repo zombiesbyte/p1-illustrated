@@ -164,7 +164,7 @@ The following is a list of the P1-illustrated naming system:
 
 # Buttons
 
-![P1-illustrated](../master/images/assets/button_red.png)
+![P1-illustrated](../master/images/assets/btn_red.png)
 
 We list the following co-ordinates for the button layouts
 
