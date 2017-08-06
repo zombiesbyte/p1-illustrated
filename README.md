@@ -4,9 +4,12 @@
 
 # Special Thanks
 A special thanks goes out to the help and support of the following people.
+
 *In alphabetical order*
+
 __rgn, charmander, DeltaHeavy, f32, GreenJello, myndzi, Obiwantje, Phweda, RLa, timmyb
-Thanks Guys!
+
+**Thanks Guys!**
 
 # Colour Swatches
 *Illustrates the available colours*
