@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/zombiesbyte/p1-illustrated#readme",
   "dependencies": {
+    "async": "^2.5.0",
+    "bluebird": "^3.5.0",
     "jimp": "^0.2.28",
+    "sqlite": "^2.8.0",
     "sqlite3": "^3.1.8"
   }
 }

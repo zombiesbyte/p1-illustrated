@@ -1,6 +1,13 @@
 ![P1-illustrated](../master/images/reference/p1-illustrated-logo.png)
 
 **Please note this project is still in its early stages of developement**
+
+# Special Thanks
+A special thanks goes out to the help and support of the following people.
+*In alphabetical order*
+__rgn, charmander, DeltaHeavy, f32, GreenJello, myndzi, Obiwantje, Phweda, RLa, timmyb
+Thanks Guys!
+
 # Colour Swatches
 *Illustrates the available colours*
 

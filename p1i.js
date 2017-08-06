@@ -1,6 +1,7 @@
-var Jimp = require("jimp");
-var fs = require('fs');
-var sqlite3 = require('sqlite3').verbose();
+const Promise = require("bluebird");
+const Jimp = require("jimp");
+const fs = Promise.promisifyAll(require('fs'))
+const sqlite3 = require('sqlite3').verbose();
 
 process.stdout.write('\x1B[2J\x1B[0f');
 console.log("");
@@ -17,39 +18,56 @@ console.log("    ---------------------------------------------------------------
 console.log("    --Dal1980--------------------------------------------------P1-illustrated--Version 1.0--(beta)--");
 console.log("");
 
-var limit = 0;
-var offset = 0;
+//this is the width and height of our new images
+let platterW = 1000;
+let platterH = 500;
 
-var platterW = 1000;
-var platterH = 500;
-//var image = new Jimp( platterW, platterH );
-
-var imageTracker = "";
-
-var dbName = "roms.db"; //SQLite db file (in db folder)
-var db = new sqlite3.Database('db\\' + dbName);
-
-
-
+const dbName = "roms.db"; //SQLite db file (in db folder)
+const db = new sqlite3.Database('db\\' + dbName);
+let totalResults = 0;
+let currentWorking = 0;
+let assetsObjArr = [];
 //synchronous read of our schema
-var schema = JSON.parse( fs.readFileSync("data\\schema.json") );
-
-//Jimp assets
-var jimpFont;
+const schema = JSON.parse( fs.readFileSync("data\\schema.json") );
 
 //Lycos, fetch me my database, good boy!
-var prepElements = function(callback){
-    db.each("SELECT * FROM `p1i` WHERE `element_1` != '' LIMIT 2000", function(err, row) {
-        if(err) console.log(err);
-        callback(err, row);        
+const getRows = () => new Promise((resolve, reject) => {
+    db.all("SELECT * FROM `p1i` WHERE `element_1` != ''", function(err, rows) {
+        if(err) reject(err);
+        resolve(rows);
     });
-};
+});
 
-//callback from our database row row
-Jimp.loadFont("data\\fonts\\lato.fnt").then(function(font){
-    jimpFont = font;
-}).then(function(){
-    prepElements(function(err, row){
+// font will be absolutely needed, so loading it at the boot time
+// Lets load all of our assets in memory for future use since these
+// will be required for all of our image building processes.
+const assetLookup = []; //we use this as our associate index lookup
+
+const getAllAssets = () => {
+    return fs.readdirAsync('images\\assets\\')
+    .then((filenames) => {
+        return filenames.map(f => {
+            const propNameArray = f.split('.')
+            const propName = propNameArray[0].replace(/\_/g, '')
+            assetLookup.push( propName );
+            return Jimp.read('images\\assets\\' + f)
+        }).concat([
+            Jimp.loadFont('data\\fonts\\lato.fnt') //our JimpFontObj
+        ])
+    })
+};
+Promise.all([
+        Promise.all(getAllAssets()),
+        getRows()
+    ])
+    .then(results => {
+        assetLookup.push( "font" ); //we need to add the font last
+        totalResults = results[1].length;
+        assetsObjArr = results[0]; //we asign the getAssets array to our global scope
+        return results[1]; //we now only need to pass the rows to the next map function
+    })
+    .mapSeries((row) => { 
+        currentWorking++;
         var p1i = {}; //stores our row as a structured object
         p1i.totalElements = 0;  //how many total elements
         p1i.totalButtons = 0; //how many total buttons found
@@ -61,18 +79,16 @@ Jimp.loadFont("data\\fonts\\lato.fnt").then(function(font){
             if(key == 'name') p1i.name = row[key];
             else if(key == 'version') p1i.version = row[key];
         });
-
         //we now have our preliminary object from the db row info
         //we can gather more info from each of these functions
-        updateConsole("    Preparing image parts: " + p1i.name + "                               ");
-        p1i = organiseButtonLayouts(p1i);
-        p1i = organisePlacements(p1i);
-        jimpImgObj = placeElements(p1i);
-        if(p1i.version == '0') addBetaTag(jimpImgObj, p1i);
-        //console.log(p1i);
-
-    });
-});
+        //updateConsole("    Preparing image parts: " + p1i.name + "                               ");
+        
+        //console.log(assetsObjArr);
+        //console.log(p1i.name);
+        organiseButtonLayouts(p1i);
+        organisePlacements(p1i);
+        return Promise.delay(100).then(function(){ return placeElements(p1i); })
+    }, { concurrency: 100 });
 
 function explodeElement(el, csvGrp){
     var elementArray = csvGrp.split(',');
@@ -123,7 +139,7 @@ function explodeElement(el, csvGrp){
     return el;
 }
 
-function organisePlacements(p1i){
+const organisePlacements = function(p1i){
     //we now need to add all of the heights and widths up and see
     //what space we are left on the canvas. This is then distributed
     //across the total number of elements (button-sets) so we have
@@ -156,13 +172,14 @@ function organisePlacements(p1i){
         //depending on each elements height. We don't need to do that here.
         //var startY = Math.floor( ( platterH - (maxYCoord + minYCoord) - schema.buttons.height ) / 2 );
     }
-    else{
+    // Future use (right now we don't want/need to check for this scenario)
+    //else{
         //console.log('Error: (' + p1i.name + ') the total width of all elements is greater than the canvas: allWidths: ' + allWidths + ' Canvas Width: ' + platterW);
-    }
+    //}
     return p1i;
-}
+};
 
-function organiseButtonLayouts(p1i){
+const organiseButtonLayouts = function(p1i){
     p1i.buttonSchema = p1i.totalButtons + '-' + p1i.buttonDesign;
     var maxXCoord = 0;
     var maxYCoord = 0;
@@ -186,9 +203,9 @@ function organiseButtonLayouts(p1i){
         "height": (maxYCoord + schema.buttons.height)
     };
     return p1i;
-}
+};
 
-function placeElements(p1i){
+const placeElements = function(p1i){
     //we need to make a fresh instance for each new image
     var image = new Jimp( platterW, platterH );
     var marginCount = 1;
@@ -197,7 +214,7 @@ function placeElements(p1i){
     for(var n = 0; n < p1i.totalElements; n++){
         if(p1i.elements[n].device == 'btn'){
             buttonCount++;
-            var asset = p1i.elements[n].device + '_' + p1i.elements[n].colour;
+            var asset = p1i.elements[n].device + p1i.elements[n].colour;
             //var xPos = ( (p1i.distroMarginWidth - (p1i.elements[n].width /2 ) ) + p1i.elements[n].btnX ) + margin;
             var xPos = (p1i.distroMarginWidth * marginCount) + p1i.elements[n].btnX + margin;
             
@@ -209,8 +226,9 @@ function placeElements(p1i){
                 marginCount++;
             }
         }
-        else if(p1i.elements[n].device == 'joy'){ 
-            var asset = p1i.elements[n].device + '_' + p1i.elements[n].design + '_' + p1i.elements[n].colour;
+        else if(p1i.elements[n].device == 'joy'){
+
+            var asset = p1i.elements[n].device + p1i.elements[n].design + p1i.elements[n].colour;
             var xPos = p1i.distroMarginWidth + margin;
             marginCount++;
             margin += p1i.elements[n].width;
@@ -218,43 +236,39 @@ function placeElements(p1i){
         }
         else continue; // we temporarily don't handle any other joy for now
         
-        addPart({
-            'image':    image,
-            'saveAs':   p1i.name +'.png',
-            'asset':    asset,
-            'xPos':     xPos,
-            'yPos':     yPos,
-            'label':    p1i.elements[n].text,
-            'labelPos':    p1i.elements[n].labelPos 
-        });
+        var assetIndex = assetLookup.indexOf(asset);
+
+        if(assetIndex >= 0){
+            addPart({
+                'image':    image,
+                'saveAs':   p1i.name +'.png',
+                'asset':    assetsObjArr[ assetIndex ],
+                'xPos':     xPos,
+                'yPos':     yPos,
+                'label':    p1i.elements[n].text,
+                'labelPos': p1i.elements[n].labelPos,
+                'fontObj':  assetsObjArr[ assetsObjArr.length - 1 ] 
+            });
+        }
 
     }
-    return image;
-}
 
-function addBetaTag(imgObj, p1i){
-    addPart({
-            'image':    imgObj,
+    //add the beta badge to the image if ver 0
+    if(p1i.version == '0'){
+        var betaAssetIndex = assetLookup.indexOf('beta');
+        return addPart({
+            'image':    image,
             'saveAs':   p1i.name +'.png',
-            'asset':    '_beta',
+            'asset':    assetsObjArr[ betaAssetIndex ],
             'xPos':     920,
             'yPos':     436
         });
-}
+    }
+    return;
+};
 
 //places parts on our image
-var addPart = function(parts){
-    //console.log(parts);
-    
-    /*Jimp.read('images\\assets\\' + parts.asset + '.png', function( err, el) {
-        //if (err) throw err;
-        parts.image.composite( el, parts.xPos, parts.yPos );
-        parts.image.write("set\\" + parts.saveAs) // save 
-        console.log('write called within jimp');
-    });*/
-
-    Jimp.read('images\\assets\\' + parts.asset + '.png').then(function (el) {
-        parts.image.composite( el, parts.xPos, parts.yPos );
+function addPart(parts){
         
         if(parts.label != null){
             var labelX = parseInt(parts.xPos);
@@ -262,22 +276,24 @@ var addPart = function(parts){
             if(parts.labelPos == 0) var labelY = parseInt(parts.yPos - 25); //label top
             else var labelY = parseInt(parts.yPos + 96); //label bottom
 
-            var textWidth = measureMyText(jimpFont, parts.label);
+            var textWidth = measureMyText(parts.fontObj, parts.label);
             var textDiff  = 94 - textWidth;
             var centredTxt =  Math.floor( textDiff / 2 );
             labelX += centredTxt - 2;
-            parts.image.print( jimpFont, labelX, labelY, parts.label );
+            parts.image.print( parts.fontObj, labelX, labelY, parts.label );
         }
+        var saveFile = "set\\" + parts.saveAs;
+        parts.image.composite( parts.asset, parts.xPos, parts.yPos )
+        updateConsole("    [" + currentWorking + " | " + totalResults + "] " + parts.saveAs + "            ");
+        const writeImage = (saveFile) => new Promise((resolve, reject) => {
+            parts.image.write(saveFile, resolve()); // save
+        });
+        return writeImage(saveFile);
 
-        parts.image.write("set\\" + parts.saveAs); // save
-        updateConsole("    Writing image: " + parts.saveAs + "                               ");
-    }).catch(function (err) {
-        console.error(err);
-    });
-
-
+        //parts.image.write(saveFile); // save
 };
 
+//borrowed function from the Jimp module
 function measureMyText(font, text){
     var x = 0;
     for (var i = 0; i < text.length; i++) {
