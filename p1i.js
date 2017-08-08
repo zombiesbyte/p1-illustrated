@@ -17,6 +17,16 @@ console.log("    ░░           ░    ▒ ░ ░ ░    ░ ░   ░░░ 
 console.log("    ------------------------------------------------------------------------------------------------");
 console.log("    --Dal1980--------------------------------------------------P1-illustrated--Version 1.0--(beta)--");
 console.log("");
+let taskOp = "";
+process.argv.forEach(function (val, index) {  
+    if(index > 1){
+        if(val == '-u') taskOp = "AND `version` > 0";
+        else {
+            console.log( "    ** Error: Unknown flag" );
+            taskOp = "";
+        }
+    }
+});
 
 //this is the width and height of our new images
 let platterW = 1000;
@@ -32,7 +42,7 @@ const schema = JSON.parse( fs.readFileSync("data\\schema.json") );
 
 //Lycos, fetch me my database, good boy!
 const getRows = () => new Promise((resolve, reject) => {
-    db.all("SELECT * FROM `p1i` WHERE `element_1` != ''", function(err, rows) {
+    db.all("SELECT * FROM `p1i` WHERE `element_1` != ''" + taskOp, function(err, rows) {
         if(err) reject(err);
         resolve(rows);
     });
@@ -233,6 +243,8 @@ const placeElements = function(p1i){
             marginCount++;
             margin += p1i.elements[n].width;
             var yPos = Math.floor( (platterH - p1i.elements[n].height)  / 2 ) - 40;
+            xPos += parseInt(p1i.elements[n].relX);
+            yPos += parseInt(p1i.elements[n].relY);
         }
         else continue; // we temporarily don't handle any other joy for now
         
