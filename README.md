@@ -47,7 +47,7 @@ right up to an 5 (half 8) way direction.
 The following example shows the same part (2-way Joy) in the 3 orientations (n)orth, (n)orth (w)est, and (n)orth (e)ast.
 **It is important to note that it is not the spoon that bends, but your mind!**
 
-![P1-illustrated](../master/images/assets/example_rotations.png)
+![P1-illustrated](../master/images/reference/example_rotations.png)
 
 The following is a list of the P1-illustrated naming system:
 ###### Key
