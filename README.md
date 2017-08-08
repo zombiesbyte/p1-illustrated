@@ -43,6 +43,12 @@ __rgn, charmander, DeltaHeavy, f32, GreenJello, myndzi, Obiwantje, Phweda, RLa, 
 There are many different variations of digital joystick control. From something as simple as a 2-way horizontal
 right up to an 5 (half 8) way direction.
 
+### A note on rotations
+The following example shows the same part (2-way Joy) in the 3 orientations (n)orth, (n)orth (w)est, and (n)orth (e)ast.
+**It is important to note that it is not the spoon that bends, but your mind!**
+
+![P1-illustrated](../master/images/assets/example_rotations.png)
+
 The following is a list of the P1-illustrated naming system:
 ###### Key
 | Symbol | Meaning                                       |
